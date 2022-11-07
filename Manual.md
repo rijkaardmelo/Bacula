@@ -4,8 +4,6 @@
 
     apt update && apt -y install apt-transport-https
 
-    deb [arch=amd64] https://bacula.org/packages/5f1e8eefd1016/bacula/debs/13.0.1 jammy main
-
 ## Import the GPG key
 
     cd /tmp
@@ -15,6 +13,8 @@
     apt-key add Bacula-4096-Distribution-Verification-key.asc
     
     rm Bacula-4096-Distribution-Verification-key.asc
+
+    cd /
 
 ## `apt` Package Manager Configuration
 
@@ -26,6 +26,10 @@
     
     #Bacula Community
     deb [arch=amd64] https://bacula.org/packages/5f1e8eefd1016/bacula/debs/13.0.1 jammy main
+
+### Install bacula
+
+    apt update && apt -y install bacula
 
 # Install Baculum in Ubuntu Focal
 
@@ -40,13 +44,14 @@
 ## and write the following repositories in it
 
     deb [ arch=amd64 ] http://www.bacula.org/downloads/baculum/stable/ubuntu focal main
+
     deb-src http://www.bacula.org/downloads/baculum/stable/ubuntu focal main
 
 ## Baculum API
 
 ### Baculum API with Apache web server
 
-    apt-get install baculum-common baculum-api baculum-api-apache2
+    apt update && apt -y install baculum-common baculum-api baculum-api-apache2
 
 #### After installation you must enable the rewrite Apache module:
 
@@ -62,7 +67,7 @@
 
 ### ou Baculum API with Lighttpd web server
 
-    apt-get install baculum-common baculum-api baculum-api-lighttpd
+    apt update && apt -y install baculum-common baculum-api baculum-api-lighttpd
 
 #### After installation please start the Lighttpd web server:
 
@@ -72,7 +77,7 @@
 
 ### Baculum Web with Apache web server
 
-    apt-get install baculum-common baculum-web baculum-web-apache2
+    apt update && apt -y install baculum-common baculum-web baculum-web-apache2
 
 #### After installation you must enable the rewrite Apache module:
 
@@ -88,7 +93,7 @@
 
 ### ou Baculum Web with Lighttpd web server
 
-    apt-get install baculum-common baculum-web baculum-web-lighttpd
+    apt update && apt -y install baculum-common baculum-web baculum-web-lighttpd
 
 #### After installation please start the Lighttpd web server:
 
