@@ -1,8 +1,15 @@
 # Install Bacula 13 in Ubuntu 22.04
 
+
 ## Additional Package Installation
 
-    apt update && apt -y install apt-transport-https
+    apt update && apt -y install software-properties-common ca-certificates lsb-release apt-transport-https
+
+* php 7.4
+
+        LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+
+        apt update && apt -y install php7.4 php-bcmath php7.4-mbstring
 
 ## Import the GPG key
 
@@ -29,7 +36,13 @@
 
 ### Install bacula
 
-    apt update && apt -y install bacula
+* Mysql
+
+        apt update && apt -y install bacula-mysql php7.4-pgsql
+
+* Postgresql
+
+        apt update && apt -y install bacula-postgresql php7.4-pgsql 
 
 # Install Baculum in Ubuntu Focal
 
@@ -51,7 +64,7 @@
 
 ### Baculum API with Apache web server
 
-    apt update && apt -y install baculum-common baculum-api baculum-api-apache2
+    apt update && apt -y install php-bcmath php7.4-mbstring php7.4-curl php7.4-ldap baculum-common baculum-api baculum-api-apache2
 
 #### After installation you must enable the rewrite Apache module:
 
@@ -67,11 +80,26 @@
 
 ### ou Baculum API with Lighttpd web server
 
-    apt update && apt -y install baculum-common baculum-api baculum-api-lighttpd
+    apt update && apt -y install php7.4-bcmath php7.4-mbstring php7.4-curl php7.4-dom php7.4-ldap baculum-common baculum-api baculum-api-lighttpd
 
 #### After installation please start the Lighttpd web server:
 
     systemctl start baculum-api-lighttpd
+
+### Permissões
+
+#### Create a new sources list file:
+
+    /etc/sudoers.d/baculum-api
+
+#### and write the following repositories in it
+
+    Defaults:www-data !requiretty
+    www-data ALL = (root) NOPASSWD: /opt/bacula/bin/bconsole
+    www-data ALL = (root) NOPASSWD: /opt/bacula/bin/bdirjson
+    www-data ALL = (root) NOPASSWD: /opt/bacula/bin/bsdjson
+    www-data ALL = (root) NOPASSWD: /opt/bacula/bin/bfdjson
+    www-data ALL = (root) NOPASSWD: /opt/bacula/bin/bbconsjson
 
 ## Baculum Web
 

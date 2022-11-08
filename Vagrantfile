@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
     
     config.vm.define "Bacula" do |bacula|
         # Configurando a rede
-        bacula.vm.network "public_network", ip:"10.200.4.200/16"
+        bacula.vm.network "public_network", ip: "10.200.4.200", netmask: "255.255.0.0"
         
         # Configurando a maquina virtual
         bacula.vm.provider "virtualbox" do |vb|
