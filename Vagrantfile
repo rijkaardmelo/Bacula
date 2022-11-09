@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
     # O sistema operacional que vai ser instalado nas maquinas virtuais
-    config.vm.box = "ubuntu/jammy64"
+    config.vm.box = "debian/bullseye64"
     
     config.vm.define "Bacula" do |bacula|
         # Configurando a rede

@@ -1,15 +1,8 @@
-# Install Bacula 13 in Ubuntu 22.04
-
+# Install Bacula 13 in Debian 11
 
 ## Additional Package Installation
 
-    apt update && apt -y install software-properties-common ca-certificates lsb-release apt-transport-https
-
-* php 7.4
-
-        LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
-
-        apt update && apt -y install php7.4 php-bcmath php7.4-mbstring
+    apt update && apt -y install software-properties-common ca-certificates lsb-release apt-transport-https gnupg
 
 ## Import the GPG key
 
@@ -32,19 +25,19 @@
 ### and write the following repositories in it
     
     #Bacula Community
-    deb [arch=amd64] https://bacula.org/packages/5f1e8eefd1016/bacula/debs/13.0.1 jammy main
+    deb [arch=amd64] https://bacula.org/packages/5f1e8eefd1016/bacula/debs/13.0.1 bullseye main
 
 ### Install bacula
 
 * Mysql
 
-        apt update && apt -y install bacula-mysql php7.4-pgsql
+        apt update && apt -y install bacula-mysql php7.4-mysql
 
 * Postgresql
 
         apt update && apt -y install bacula-postgresql php7.4-pgsql 
 
-# Install Baculum in Ubuntu Focal
+# Install Baculum in Debian 11
 
 ## Import the public key into the APT trusted key list:
 
@@ -56,15 +49,14 @@
 
 ## and write the following repositories in it
 
-    deb [ arch=amd64 ] http://www.bacula.org/downloads/baculum/stable/ubuntu focal main
-
-    deb-src http://www.bacula.org/downloads/baculum/stable/ubuntu focal main
+    deb http://www.bacula.org/downloads/baculum/stable-11/debian bullseye main
+    deb-src http://www.bacula.org/downloads/baculum/stable-11/debian bullseye main
 
 ## Baculum API
 
 ### Baculum API with Apache web server
 
-    apt update && apt -y install php-bcmath php7.4-mbstring php7.4-curl php7.4-ldap baculum-common baculum-api baculum-api-apache2
+    apt update && apt -y install php7.4-bcmath php7.4-dom php7.4-mbstring php7.4-curl php7.4-ldap baculum-common baculum-api baculum-api-apache2
 
 #### After installation you must enable the rewrite Apache module:
 
@@ -126,3 +118,27 @@
 #### After installation please start the Lighttpd web server:
 
     systemctl start baculum-web-lighttpd
+
+## Configurações:
+
+<img src="./img/config.png" alt="Erro 01"/>
+
+## Obs:
+
+### Erro 01:
+
+` Código do erro: 1000 Mensagem: Internal error. Component property 'PoolRecord.maxpoolbytes' is not defined. `
+
+<img src="./img/Erro01.png" alt="Erro 01"/>
+
+### Resolução 01:
+
+    # Insert line
+    public $priorjob;
+    /usr/share/baculum/htdocs/protected/API/Class/JobRecord.php
+    
+    # Insert line
+    public $maxpoolbytes;
+    /usr/share/baculum/htdocs/protected/API/Class/PoolRecord.php
+
+    systemctl restart apache2
