@@ -18,7 +18,7 @@ echo "deb [arch=amd64] https://bacula.org/packages/5f1e8eefd1016/bacula/debs/13.
 
 apt update && apt -y install bacula-postgresql php7.4-pgsql 
 
-# Install Baculum in Debian
+# Install Baculum in Debian 11
 wget -qO - http://www.bacula.org/downloads/baculum/baculum.pub | apt-key add -
 
 echo "deb http://www.bacula.org/downloads/baculum/stable-11/debian bullseye main
