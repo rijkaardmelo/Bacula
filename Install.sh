@@ -3,6 +3,10 @@ SO=NULL
 BACULA_DB=NULL
 PHP_BACULA_DB=NULL
 
+apt update && apt upgrade -y && apt -y install gnupg
+
+clear
+
 while [ $SO == NULL ]
 do
     echo "Selecione o Sistema Operacional:"
@@ -90,11 +94,8 @@ case $BACULA_DB in
         ;;    
 esac
 
-export BACULA_DB=$BACULA_DB
-
-export PHP_BACULA_DB=$PHP_BACULA_DB
-
-apt update && apt -y install gnupg
+echo "export BACULA_DB=$BACULA_DB
+export PHP_BACULA_DB=$PHP_BACULA_DB" > /etc/profile.d/Bacula_Database.sh
 
 wget https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc
     
@@ -103,14 +104,16 @@ apt-key add Bacula-4096-Distribution-Verification-key.asc
 rm Bacula-4096-Distribution-Verification-key.asc
 
 apt-key export E9DF3643 | gpg --dearmour -o /etc/apt/trusted.gpg.d/bacula.gpg --yes
-
-apt update && apt -y install bacula-$BACULA_DB php-$PHP_BACULA_DB 
-
+ 
 wget -qO - http://www.bacula.org/downloads/baculum/baculum.pub | apt-key add - 
 
 apt-key export 5C3DBD51 | gpg --dearmour -o /etc/apt/trusted.gpg.d/baculum.gpg --yes
 
-apt update && apt -y install php-bcmath php-mbstring php-dom php-curl php-ldap baculum-common baculum-api baculum-api-apache2 baculum-web baculum-web-apache2
+apt update
+
+apt -y install bacula-$BACULA_DB php-$PHP_BACULA_DB
+
+apt -y install php-bcmath php-mbstring php-dom php-curl php-ldap baculum-common baculum-api baculum-api-apache2 baculum-web baculum-web-apache2
 
 a2enmod rewrite
 

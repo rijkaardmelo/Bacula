@@ -6,15 +6,13 @@
 
 ## Import the GPG key
 
-    cd /tmp
-
     wget https://www.bacula.org/downloads/Bacula-4096-Distribution-Verification-key.asc
     
     apt-key add Bacula-4096-Distribution-Verification-key.asc
+
+    apt-key export E9DF3643 | gpg --dearmour -o /etc/apt/trusted.gpg.d/bacula.gpg --yes
     
     rm Bacula-4096-Distribution-Verification-key.asc
-
-    cd /
 
 ## `apt` Package Manager Configuration
 
@@ -31,17 +29,19 @@
 
 * Mysql
 
-        apt update && apt -y install bacula-mysql php7.4-mysql
+        apt update && apt -y install bacula-mysql php-mysql
 
 * Postgresql
 
-        apt update && apt -y install bacula-postgresql php7.4-pgsql 
+        apt update && apt -y install bacula-postgresql php-pgsql 
 
 # Install Baculum in Debian 11
 
 ## Import the public key into the APT trusted key list:
 
     wget -qO - http://www.bacula.org/downloads/baculum/baculum.pub | apt-key add -
+    
+    apt-key export 5C3DBD51 | gpg --dearmour -o /etc/apt/trusted.gpg.d/baculum.gpg --yes
 
 ## Create a new sources list file:
 
@@ -56,7 +56,7 @@
 
 ### Baculum API with Apache web server
 
-    apt update && apt -y install php7.4-bcmath php7.4-dom php7.4-mbstring php7.4-curl php7.4-ldap baculum-common baculum-api baculum-api-apache2
+    apt update && apt -y install php-bcmath php-dom php-mbstring php-curl php-ldap baculum-common baculum-api baculum-api-apache2
 
 #### After installation you must enable the rewrite Apache module:
 
@@ -72,7 +72,7 @@
 
 ### ou Baculum API with Lighttpd web server
 
-    apt update && apt -y install php7.4-bcmath php7.4-mbstring php7.4-curl php7.4-dom php7.4-ldap baculum-common baculum-api baculum-api-lighttpd
+    apt update && apt -y install php-bcmath php-mbstring php-curl php-dom php-ldap baculum-common baculum-api baculum-api-lighttpd
 
 #### After installation please start the Lighttpd web server:
 
@@ -92,6 +92,15 @@
     www-data ALL = (root) NOPASSWD: /opt/bacula/bin/bsdjson
     www-data ALL = (root) NOPASSWD: /opt/bacula/bin/bfdjson
     www-data ALL = (root) NOPASSWD: /opt/bacula/bin/bbconsjson
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl start bacula-dir
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl stop bacula-dir
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl restart bacula-dir
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl start bacula-sd
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl stop bacula-sd
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl restart bacula-sd
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl start bacula-fd
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl stop bacula-fd
+    www-data ALL = (root) NOPASSWD: /usr/bin/systemctl restart bacula-fd
 
 ## Baculum Web
 
