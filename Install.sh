@@ -137,6 +137,6 @@ www-data ALL = (root) NOPASSWD: /usr/bin/systemctl start bacula-fd
 www-data ALL = (root) NOPASSWD: /usr/bin/systemctl stop bacula-fd
 www-data ALL = (root) NOPASSWD: /usr/bin/systemctl restart bacula-fd" > /etc/sudoers.d/baculum-api
 
-chown www-data -R /opt/bacula/working
+chown www-data -R /opt/bacula
 
 systemctl restart apache2
